@@ -1,23 +1,11 @@
 version: 3
 parallel_plan: true
 parallel_apply: true
-workflows:
-  safe_output:
-    plan:
-      steps:
-        - run: /bin/bash -c "terraform init -input=false -no-color 1> /dev/null"
-        - run: terraform workspace select -no-color $WORKSPACE
-        - run: /bin/bash -c "set -eo pipefail; terraform plan -input=false -refresh -no-color -out $PLANFILE"
-    apply:
-      steps:
-        - run: /bin/bash -c "set -eo pipefail; terraform apply -no-color $PLANFILE"
-
 projects:
 # If two or more projects have the same dir and workspace, they must also have
 # a 'name' key to differentiate them.
 - name: testing
   dir: ./terraform/
   workspace: test
-  workflow: safe_output
   autoplan:
     enabled: true
