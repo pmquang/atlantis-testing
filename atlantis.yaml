@@ -6,6 +6,5 @@ projects:
 # a 'name' key to differentiate them.
 - name: testing
   dir: ./terraform/
-  workspace: test
   autoplan:
     enabled: true
